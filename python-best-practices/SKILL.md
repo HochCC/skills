@@ -62,26 +62,14 @@ def get_user(user_id: str) -> User:
     return user
 ```
 
-**When to use try:**
-- ✅ Unavoidable external IO errors (Network, Disk)
-- ✅ Third-party library boundaries where stable recovery is possible
-- ❌ Business logic errors → RAISE directly, DO NOT CATCH
-- ❌ Programming bugs → Let crash
-- ❌ Demonstration/Test scripts or `if __name__ == "__main__":` blocks → NEVER catch errors to "pretty print" them; let them crash to show the full traceback and error state.
+**Avoid `try` unless absolutely necessary:**
 
-**Minimize try scope:**
-Always prefer raising a specific exception over wrapping logic in `try`. If a function might fail because of input, it should raise. The caller should only catch if it can actually "fix" the situation.
+- ✅ **Unavoidable external IO**: Network requests, file system access, database transactions.
+- ✅ **Library boundaries**: When a third-party library might throw unexpected errors that you can recover from.
+- ❌ **Business logic**: Never wrap business rules in `try`. Let exceptions bubble up and handle them at the API/UI boundary.
+- ❌ **Development/Testing**: Never catch errors in test scripts or `__main__` blocks; tracebacks are your friends.
 
-```python
-# ✅ Narrow scope, specific exception
-with open(path) as f:  # Let FileNotFoundError propagate
-    content = f.read()
-
-try:
-    data = json.loads(content)
-except json.JSONDecodeError as e:
-    raise InvalidFormatError(f"Invalid JSON: {e}") from e
-```
+Keep the `try` scope as small as possible.
 
 ---
 
