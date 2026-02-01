@@ -4,25 +4,25 @@ globs: ["**/*.py"]
 alwaysApply: true
 ---
 
-# Python Best Practices
+# Python 最佳实践
 
-## Core Principles
+## 核心原则
 
-1. **Type Hints**: All function params and returns must have type annotations
-2. **Fail Fast**: Raise errors immediately; do not catch unless recovery is required at a system boundary
-3. **Clean Code**: Use guard clauses for early return
-4. **English Only**: All docstrings and comments must be in English
-
----
-
-## File Naming
-
-- Use `snake_case`: `user_service.py`, `data_utils.py`
-- Test files: `test_<module>.py`
+1. **类型提示**: 所有函数参数和返回值必须有类型注解
+2. **快速失败**: 立即抛出错误，除非在系统边界处需要恢复，否则不要捕获
+3. **简洁代码**: 使用守卫子句提前返回
+4. **英文注释**: 所有 docstring 和注释必须使用英文
 
 ---
 
-## Type Annotations
+## 文件命名
+
+- 使用 `snake_case`: `user_service.py`, `data_utils.py`
+- 测试文件: `test_<module>.py`
+
+---
+
+## 类型注解
 
 ```python
 # ❌ Bad
@@ -37,14 +37,14 @@ def get_user(user_id: str) -> User:
     return user
 ```
 
-- Use `-> None` for functions without return
-- Prefer `list`, `dict` over `List`, `Dict` (Python 3.9+)
+- 无返回值的函数使用 `-> None`
+- 优先使用 `list`, `dict` 而非 `List`, `Dict` (Python 3.9+)
 
 ---
 
-## Error Handling
+## 错误处理
 
-**Fail Fast - don't swallow errors:**
+**快速失败 - 不要吞掉错误:**
 
 ```python
 # ❌ Bad: hides bugs
@@ -62,20 +62,20 @@ def get_user(user_id: str) -> User:
     return user
 ```
 
-**Avoid `try` unless absolutely necessary:**
+**除非绝对必要，否则避免使用 `try`:**
 
-- ✅ **Unavoidable external IO**: Network requests, file system access, database transactions.
-- ✅ **Library boundaries**: When a third-party library might throw unexpected errors that you can recover from.
-- ❌ **Business logic**: Never wrap business rules in `try`. Let exceptions bubble up and handle them at the API/UI boundary.
-- ❌ **Development/Testing**: Never catch errors in test scripts or `__main__` blocks; tracebacks are your friends.
+- ✅ **不可避免的外部 IO**: 网络请求、文件系统访问、数据库事务
+- ✅ **库边界**: 当第三方库可能抛出可恢复的意外错误时
+- ❌ **业务逻辑**: 不要用 `try` 包装业务规则，让异常向上冒泡，在 API/UI 边界处理
+- ❌ **开发/测试**: 不要在测试脚本或 `__main__` 块中捕获错误，堆栈跟踪是你的好朋友
 
-Keep the `try` scope as small as possible.
+保持 `try` 的作用域尽可能小。
 
 ---
 
-## Function Design
+## 函数设计
 
-**Use guard clauses for early return:**
+**使用守卫子句提前返回:**
 
 ```python
 # ❌ Bad: nested
@@ -97,15 +97,15 @@ def process(order: Order) -> Result:
     return Result.success(total=_calc_total(order.items))
 ```
 
-**Naming:**
-- Actions: `get_`, `create_`, `update_`, `delete_`
-- Boolean: `is_valid()`, `has_permission()`, `can_edit()`
+**命名规范:**
+- 动作: `get_`, `create_`, `update_`, `delete_`
+- 布尔: `is_valid()`, `has_permission()`, `can_edit()`
 
 ---
 
-## Documentation (English Only)
+## 文档（仅限英文）
 
-**Docstring - Google Style:**
+**Docstring - Google 风格:**
 
 ```python
 def fetch_orders(user_id: str, *, limit: int = 100) -> list[Order]:
@@ -118,20 +118,10 @@ def fetch_orders(user_id: str, *, limit: int = 100) -> list[Order]:
     Returns:
         List of Order objects.
 
-    Raises:
-        UserNotFoundError: If user doesn't exist.
     """
 ```
 
-**Simple functions - one line:**
-
-```python
-def calc_tax(amount: Decimal, rate: Decimal) -> Decimal:
-    """Calculate tax from base price and rate."""
-    return amount * rate
-```
-
-**Comments - explain WHY, not WHAT:**
+**注释 - 解释为什么，而非是什么:**
 
 ```python
 # ❌ Bad
@@ -145,7 +135,7 @@ if request.source == "internal":
 
 ---
 
-## Design Patterns
+## 设计模式
 
 **Dataclass / Pydantic:**
 
@@ -156,12 +146,12 @@ class User:
     name: str
     email: str
 
-class UserConfig(BaseModel):  # Pydantic for validation
+class UserConfig(BaseModel):
     name: str = Field(..., min_length=1)
     retries: int = Field(default=3, ge=1, le=10)
 ```
 
-**Protocol (Interface):**
+**Protocol (接口):**
 
 ```python
 class Repository(Protocol):
@@ -169,7 +159,7 @@ class Repository(Protocol):
     def save(self, entity: Entity) -> None: ...
 ```
 
-**Dependency Injection:**
+**依赖注入:**
 
 ```python
 class UserService:
@@ -178,7 +168,7 @@ class UserService:
         self._cache = cache
 ```
 
-**Factory:**
+**工厂模式:**
 
 ```python
 class SerializerFactory:
@@ -193,7 +183,7 @@ class SerializerFactory:
         return cls._registry[name]()
 ```
 
-**Strategy:**
+**策略模式:**
 
 ```python
 class PricingStrategy(Protocol):
@@ -204,7 +194,7 @@ class Order:
         self._pricing = pricing
 ```
 
-**Custom Exceptions:**
+**自定义异常:**
 
 ```python
 class AppError(Exception):
@@ -218,17 +208,16 @@ class UserNotFoundError(AppError):
 
 ---
 
-## After Writing Code
+## 代码完成后
 
-**Always run and verify:** Test the code after implementation to ensure correctness.
+**务必运行验证:** 实现后测试代码以确保正确性。
 
 ---
 
-## Code Review Checklist
+## 代码审查清单
 
-- [ ] All functions have type annotations (params + return)
-- [ ] No bare `except:`, try scope minimized
-- [ ] Business errors raised, only caught at boundaries
-- [ ] Docstrings/comments in English, Google style
-- [ ] Comments explain WHY, not WHAT
-- [ ] Code tested and verified working
+- [ ] 所有函数都有类型注解（参数 + 返回值）
+- [ ] 没有裸露的 `except:`，try 作用域最小化
+- [ ] 业务错误被抛出，仅在边界处捕获
+- [ ] Docstring/注释使用英文，Google 风格
+- [ ] 代码已测试并验证可用
