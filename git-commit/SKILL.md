@@ -11,6 +11,8 @@ allowed-tools: Bash
 
 Create standardized, semantic git commits using the Conventional Commits specification. Analyze the actual diff to determine appropriate type, scope, and message.
 
+**Important: All commit messages MUST be written in English.**
+
 ## Conventional Commit Format
 
 ```
@@ -109,6 +111,7 @@ EOF
 
 ## Best Practices
 
+- **English only**: All commit messages MUST be in English
 - One logical change per commit
 - Present tense: "add" not "added"
 - Imperative mood: "fix bug" not "fixes bug"
