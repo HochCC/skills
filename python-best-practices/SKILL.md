@@ -12,6 +12,15 @@ alwaysApply: true
 2. **快速失败**: 立即抛出错误，除非在系统边界处需要恢复，否则不要捕获
 3. **简洁代码**: 使用守卫子句提前返回
 4. **英文注释**: 所有 docstring 和注释必须使用英文
+5. **代码风格一致性**: 使用 Ruff 进行代码风格检查和修复
+
+---
+
+## 代码风格
+
+- 行长度限制: **79 字符**
+- 使用 **Black** 格式化代码
+- 使用 **isort** 排序 imports (profile: black)
 
 ---
 
@@ -25,10 +34,6 @@ alwaysApply: true
 ## 类型注解
 
 ```python
-# ❌ Bad
-def get_user(user_id):
-    return db.get(user_id)
-
 # ✅ Good
 def get_user(user_id: str) -> User:
     user = db.get(user_id)
@@ -62,14 +67,12 @@ def get_user(user_id: str) -> User:
     return user
 ```
 
-**除非绝对必要，否则避免使用 `try`:**
+**除非绝对必要，否则避免使用 `try`, 保持 `try` 的作用域尽可能小:**
 
 - ✅ **不可避免的外部 IO**: 网络请求、文件系统访问、数据库事务
 - ✅ **库边界**: 当第三方库可能抛出可恢复的意外错误时
 - ❌ **业务逻辑**: 不要用 `try` 包装业务规则，让异常向上冒泡，在 API/UI 边界处理
-- ❌ **开发/测试**: 不要在测试脚本或 `__main__` 块中捕获错误，堆栈跟踪是你的好朋友
-
-保持 `try` 的作用域尽可能小。
+- ❌ **开发/测试**: 不要在测试脚本或 `__main__` 块中捕获错误
 
 ---
 
@@ -121,7 +124,7 @@ def fetch_orders(user_id: str, *, limit: int = 100) -> list[Order]:
     """
 ```
 
-**注释 - 解释为什么，而非是什么:**
+**注释 - 只在关键处添加, 避免冗余:**
 
 ```python
 # ❌ Bad
@@ -129,7 +132,7 @@ def fetch_orders(user_id: str, *, limit: int = 100) -> list[Order]:
 if user.role == "admin":
 
 # ✅ Good
-# Bypass rate limit for health checks (JIRA-1234)
+# Bypass rate limit for health checks
 if request.source == "internal":
 ```
 
