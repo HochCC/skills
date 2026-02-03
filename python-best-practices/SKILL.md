@@ -18,7 +18,7 @@ alwaysApply: true
 
 ## 代码风格
 
-- 行长度限制: **79 字符**
+- 行长度限制: **79 字符**, 允许单行字符串超过长度
 - 使用 **Black** 格式化代码
 - 使用 **isort** 排序 imports (profile: black)
 
