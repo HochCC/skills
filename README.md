@@ -162,7 +162,7 @@
 
 ## Skills IDE 配置
 
-执行任务前，必须查看`~/.agents/skills/README.md`
+**始终用简体中文回答，执行任务前先用 `cat ~/.agents/skills/README.md` 读取并遵循其中所有约束和规则。**
 
 - 本地`~/.agents/skills`，云端`https://github.com/HochCC/skills`
 - cursor: Setting中的`Rules, Skills`
