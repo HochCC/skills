@@ -162,8 +162,9 @@
 
 ## Skills IDE 配置
 
-- 始终用简体中文回答，执行任务前先用 `cat ~/.agents/skills/README.md` 读取并遵循其中所有约束和规则。
-- 允许自主读取源码及配置, 运行cat,grep,ls,find等所有读取操作无需询问，默认不直接读取 >500KB 的非文本文件，不扫描：`.git/`, `dist/`, `build/`, `__pycache__/`等。
+- 始终用简体中文回答，执行任务前先用 cat ~/.agents/skills/README.md 读取并遵循其中所有约束和规则。
+- 默认不直接读取 >1MB 的非文本文件，不扫描：`.git/`, `dist/`, `build/`, `__pycache__/`, `.gitignore`等路径。
+- 把犯的错误自动精简总结到`~/.claude/memory/MEMORY.md`，供以后参考。
 
 
 - 本地`~/.agents/skills`，云端`https://github.com/HochCC/skills`
@@ -172,12 +173,13 @@
 - antigravity global skill: `~/.gemini/antigravity/global_skills`
 - vscode `Chat Instructions`中的`New/User Data`
 - claude `~/.claude/CLAUDE.md`
-    ```sh
-    conda create -n claude_env nodejs=20 -c conda-forge -y
-    npm install -g @anthropic-ai/claude-code
-    npm install -g @musistudio/claude-code-router
-    ccr_code () {
-        conda activate claude_env
-        ccr code --permission-mode acceptEdits "$@"
-    }
-    ```
+```sh
+conda create -n claude_env nodejs=20 -c conda-forge -y
+npm install -g @anthropic-ai/claude-code
+npm install -g @musistudio/claude-code-router
+ccr_code () {
+    conda activate claude_env
+    ccr code --permission-mode acceptEdits "$@" # dontAsk
+}
+# 把非删除相关的全部命令全部加到claude allow list, 例如"Bash(ls:*)"，不要每次询问
+```
