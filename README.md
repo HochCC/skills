@@ -162,7 +162,9 @@
 
 ## Skills IDE 配置
 
-**始终用简体中文回答，执行任务前先用 `cat ~/.agents/skills/README.md` 读取并遵循其中所有约束和规则。**
+- 始终用简体中文回答，执行任务前先用 `cat ~/.agents/skills/README.md` 读取并遵循其中所有约束和规则。
+- 允许自主读取源码及配置, 运行cat,grep,ls,find等所有读取操作无需询问，默认不直接读取 >500KB 的非文本文件，不扫描：`.git/`, `dist/`, `build/`, `__pycache__/`等。
+
 
 - 本地`~/.agents/skills`，云端`https://github.com/HochCC/skills`
 - cursor: Setting中的`Rules, Skills`
