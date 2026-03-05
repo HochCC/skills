@@ -171,3 +171,13 @@
 - antigravity global rule: `~/.gemini/GEMINI.md`
 - antigravity global skill: `~/.gemini/antigravity/global_skills`
 - vscode `Chat Instructions`中的`New/User Data`
+- claude `~/.claude/CLAUDE.md`
+    ```sh
+    conda create -n claude_env nodejs=20 -c conda-forge -y
+    npm install -g @anthropic-ai/claude-code
+    npm install -g @musistudio/claude-code-router
+    ccr_code () {
+        conda activate claude_env
+        ccr code --permission-mode acceptEdits "$@"
+    }
+    ```
