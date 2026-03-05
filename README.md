@@ -1,6 +1,7 @@
 # Skills
 
-- **动态加载指南**: 执行任务前读取本文件，根据任务需求按需加载对应 skill 的 `SKILL.md`，严禁加载无关 skill。
+- **动态加载指南**: 执行任务前读取本文件，根据任务需求按需加载对应 skill 的 `SKILL.md`，严禁加载无关 skill
+- 如果`~/.claude/memory/MEMORY.md`存在，先阅读
 - 生成Python代码前，须阅读`python-best-practices/SKILL.md`
 - 始终用简体中文回答
 - walkthrough, implementation_plan, task翻译为中文
