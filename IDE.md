@@ -14,6 +14,7 @@
 - antigravity global skill: `~/.gemini/antigravity/global_skills`
 - vscode `Chat Instructions`中的`New/User Data`
 - claude `~/.claude/CLAUDE.md`
+- codex `~/.codex/AGENTS.md`
 
 ## claude-code-router 配置
 
